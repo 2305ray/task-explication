@@ -1,8 +1,23 @@
 //Arquivo principal que inicializa o servidor
 import http from 'node:http';
 import { randomUUID } from 'node:crypto'; // Gera IDs únicos
+import { readCsvTasks } from '../stream/readCsv.js';//função com o csv 
 
-const tasks = []; // lista de tarefas
+let tasks = []; // lista de tarefas
+
+//função q vai carregar o csv q tem as tarefas ao servidor
+
+async function loadTasks() {
+    try{
+        tasks = await readCsvTasks(); //vai ler as tarefas lá o stream
+        console.log('Tarefas carregadas do CSV');
+    } catch (error) {
+      console.error('Erro ao carregar tarefas do CSV:', error);
+    }
+}
+
+// Chama a função para carregar as tarefas assim que o servidor for inicializado
+loadTasks();
 
 const server = http.createServer((req, res) => {
     const { method, url } = req;
@@ -51,8 +66,8 @@ const server = http.createServer((req, res) => {
                     title: data.title,
                     description: data.description,
                     completed_at: null,
-                    created_at: new Date(),
-                    updated_at: new Date(),
+                    created_at: new Date().toString(),
+                    updated_at: new Date().toString(),
                 };
 
                 tasks.push(newTask); // Adiciona a nova tarefa à lista
@@ -73,6 +88,7 @@ const server = http.createServer((req, res) => {
     res.end('Rota não encontrada');
 });
 
-server.listen(4000, () => {
-    console.log('Servidor rodando na porta 4000');
-});
+server.listen(5000, () => {
+    console.log("Servidor rodando na porta 5000");
+  });
+  

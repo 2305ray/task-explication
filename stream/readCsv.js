@@ -32,7 +32,7 @@ export function readCsvTasks() {
         
         //quando ler as linhas com sucesso ele irá fazer
         .on('data', (row) => {
-            const now = new Date().toString()//captura o momento atual em formato de stringify
+            const now = new Date().toString()//captura o momento atual em formato de string
 
             const task = {
                 id: randomUUID(), // ID único

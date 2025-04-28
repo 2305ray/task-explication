@@ -1,5 +1,6 @@
 import fs from 'node:fs'; // Módulo do Node para acessar arquivos
 import { parse } from 'csv-parse'; //  biblioteca externa que transforma cada linha do CSV em um objeto JavaScript. 
+import fetch from 'node-fetch';
 
 
 //Lê o CSV e já envia cada linha como uma requisição POST para a API. Não guarda em memória, nem cria campos adicionais.
@@ -36,7 +37,7 @@ async function readTasks() {
 
 
         //ele vai esperar o servidor responder antes de fazer a requisição http
-        await fetch('http://localhost:5000/tasks', {
+        await fetch('http://localhost:4000/tasks', {
             method: 'POST', //tipo de requisiçaõ
             headers: { //informando q estamos enviando um json
               'Content-Type': 'application/json',
